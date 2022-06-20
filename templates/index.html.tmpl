@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+	    <title>Watchmon 1.0</title>
+        <script type="text/javascript" src="static/js/vendor/smoothie.js"></script>
+        <script type="text/javascript" src="static/js/watchmon.js"></script>
+    </head>
+    <body>
+
+    <p>
+        <a id="watch_config" href="config.json" target="_blank">Config</a>
+        <a id="watch_metrics" href="metrics" target="_blank">Metrics</a>
+        <a id="watch_static" href="static" target="_blank">Static</a>
+    </p>
+
+    {{ range $group := .Canvas }}
+    <h4> {{$group.Title}} </h4>
+    <table border="2" cellpadding="0" cellspacing="0">
+        <tbody>
+        {{ range $monitor := $group.Monitors }}
+       <tr>
+            <td>{{$monitor.Title}}</td>
+            <td><canvas id="{{$monitor.Id}}" width="800" height="200"></canvas></td>
+            <td id="{{$monitor.Id}}_legend" valign="top"/>
+        </tr>
+        {{ end }}
+        </tbody>
+    </table>
+    {{ end }}
+
+    <p>
+        <a id="start_btn" href="">[Run]</a>
+        <a id="reset_btn" href="">[Reset]</a>
+    </p>
+    
+    <script>
+        (function() {
+            watchmon.init("config.json");
+        })();
+    </script>
+    </body>
+</html>

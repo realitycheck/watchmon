@@ -1,0 +1,29 @@
+monitors:
+  - id: signal_strength
+    type: gauge
+    title: Signal Strength
+    value: 
+      sourceId: "network"
+      recordId: "wifi"
+      header: "signal"
+      format: "%f"
+      labels: 
+        - header: "ssid"
+sources:
+  - id: network
+    command: nmcli -t -f "SIGNAL, SSID" d wifi
+    #command: cat sample_source.csv
+    timeout: 5s
+    output:
+      parser: csv
+      records:
+        - id: wifi
+          header: ["signal", "ssid"]
+          parserOptions:
+            separator: ":"
+graphs:
+  - id: signal_strength
+    seriesOptions:
+      /ssid="onetwothree"/:
+        strokeStyle: "#00ff00"
+        lineWidth: 4

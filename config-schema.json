@@ -1,0 +1,113 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "additionalProperties": false,
+    "properties": {
+        "monitors": {
+            "type": "array",
+            "items": {
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "enum": ["gauge"]
+                    },
+                    "value": {
+                        "properties": {
+                            "sourceId": {
+                                "type": "string"
+                            },
+                            "recordId": {
+                                "type": "string"
+                            },
+                            "header": {
+                                "type": "string"
+                            },
+                            "format": {
+                                "type": "string"
+                            },
+                            "labels": {
+                                "type": "array",
+                                "items": {
+                                    "properties": {
+                                        "header": {
+                                            "type": "string"
+                                        },
+                                        "format": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "sources": {
+            "type": "array",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "command": {
+                    "type": "string"
+                },
+                "timeout": {
+                    "type": "string"
+                },
+                "output": {
+                    "properties": {
+                        "parser": {
+                            "type": "string"
+                        },
+                        "records": {
+                            "type": "array",
+                            "items": {
+                                "properties": {
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "header": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "parserOptions": {
+                                        "additionalProperties": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "graphs": {
+            "type": "array",
+            "items": {
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "chartDelay": {
+                        "type": "integer"
+                    },
+                    "seriesOptions": {
+                        "additionalProperties": true
+                    },
+                    "chartOptions": {
+                        "additionalProperties": true
+                    },
+                    "timeOptions": {
+                        "additionalProperties": true
+                    }
+                }
+            }
+        }
+    }
+}
