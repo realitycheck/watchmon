@@ -1,4 +1,4 @@
-package watchmon
+package app
 
 import (
 	"embed"
@@ -28,16 +28,21 @@ type HTTPService struct {
 	templatesData map[string]dict
 }
 
-func initHTTPService(app *Application, config AppConfig) {
-	app.hs = &HTTPService{mux: http.NewServeMux()}
+func NewHTTPService(config AppConfig) *HTTPService {
+	hs := &HTTPService{mux: http.NewServeMux()}
 
-	app.hs.configData = makeConfigData(config)
-	app.hs.templatesData = makeTemplatesData(config)
+	hs.configData = makeConfigData(config)
+	hs.templatesData = makeTemplatesData(config)
 
-	app.hs.mux.Handle("/", http.HandlerFunc(app.hs.serveRoot))
-	app.hs.mux.Handle("/config.json", http.HandlerFunc(app.hs.serveConfigData))
-	app.hs.mux.Handle("/metrics", promhttp.Handler())
-	app.hs.mux.Handle("/static/", http.FileServer(http.FS(content)))
+	hs.mux.Handle("/", http.HandlerFunc(hs.serveRoot))
+	hs.mux.Handle("/config.json", http.HandlerFunc(hs.serveConfigData))
+	hs.mux.Handle("/metrics", promhttp.Handler())
+	hs.mux.Handle("/static/", http.FileServer(http.FS(content)))
+	return hs
+}
+
+func (hs *HTTPService) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	hs.mux.ServeHTTP(w, r)
 }
 
 func (hs *HTTPService) serveRoot(w http.ResponseWriter, r *http.Request) {

@@ -49,7 +49,7 @@ func toMapValue(v interface{}) interface{} {
 		return AnyArray(v)
 	case map[interface{}]interface{}:
 		return AnyMap(v)
-	case string:
+	case string, bool, int64, float64, int, float32:
 		return v
 	default:
 		return fmt.Sprintf("%v", v)

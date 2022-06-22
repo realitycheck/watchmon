@@ -1,4 +1,4 @@
-package watchmon
+package app
 
 import (
 	"io/ioutil"
@@ -135,22 +135,10 @@ func Test_LoadConfig(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, got, testConfig)
 
-	got = MustLoadConfig(f.Name())
-	assert.Equal(t, got, testConfig)
-
 	err = os.Remove(f.Name())
 	assert.NoError(t, err)
 
 	_, err = LoadConfig(f.Name())
 	assert.Error(t, err)
 
-	defer func() {
-		if err := recover(); err != nil {
-			assert.Error(t, err.(error))
-		} else {
-			assert.Fail(t, "MustLoadConfig didn't panic")
-		}
-	}()
-
-	MustLoadConfig(f.Name()) // panic here
 }

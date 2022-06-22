@@ -1,4 +1,4 @@
-package watchmon
+package app
 
 import (
 	"encoding/json"

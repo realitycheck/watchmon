@@ -1,10 +1,12 @@
 {
     "$schema": "http://json-schema.org/schema",
     "additionalProperties": false,
+    "required": ["monitors", "sources"],
     "properties": {
         "monitors": {
             "type": "array",
             "items": {
+                "additionalProperties": false,
                 "properties": {
                     "id": {
                         "type": "string"
@@ -16,6 +18,7 @@
                         "enum": ["gauge"]
                     },
                     "value": {
+                        "additionalProperties": false,
                         "properties": {
                             "sourceId": {
                                 "type": "string"
@@ -32,6 +35,7 @@
                             "labels": {
                                 "type": "array",
                                 "items": {
+                                    "additionalProperties": false,
                                     "properties": {
                                         "header": {
                                             "type": "string"
@@ -49,36 +53,44 @@
         },
         "sources": {
             "type": "array",
-            "properties": {
-                "id": {
-                    "type": "string"
-                },
-                "command": {
-                    "type": "string"
-                },
-                "timeout": {
-                    "type": "string"
-                },
-                "output": {
-                    "properties": {
-                        "parser": {
-                            "type": "string"
-                        },
-                        "records": {
-                            "type": "array",
-                            "items": {
-                                "properties": {
-                                    "id": {
-                                        "type": "string"
-                                    },
-                                    "header": {
-                                        "type": "array",
-                                        "items": {
+            "items": {
+                "additionalProperties": false,
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "command": {
+                        "type": "string"
+                    },
+                    "timeout": {
+                        "type": "string"
+                    },
+                    "output": {
+                        "additionalProperties": false,
+                        "properties": {
+                            "parser": {
+                                "type": "string"
+                            },
+                            "records": {
+                                "type": "array",
+                                "items": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "id": {
                                             "type": "string"
+                                        },
+                                        "firstLineIsHeader": {
+                                            "type": "boolean"
+                                        },
+                                        "header": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "parserOptions": {
+                                            "additionalProperties": true
                                         }
-                                    },
-                                    "parserOptions": {
-                                        "additionalProperties": true
                                     }
                                 }
                             }
@@ -90,6 +102,7 @@
         "graphs": {
             "type": "array",
             "items": {
+                "additionalProperties": false,
                 "properties": {
                     "id": {
                         "type": "string"
